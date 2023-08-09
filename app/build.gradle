@@ -1,0 +1,95 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id "kotlin-parcelize"
+    id "androidx.navigation.safeargs.kotlin"
+    id "com.google.dagger.hilt.android"
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'kotlin-kapt'
+//    id 'com.google.devtools.ksp'
+}
+
+android {
+    namespace 'com.example.retrofitdemo'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.retrofitdemo"
+        minSdk 26
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    buildFeatures {
+        viewBinding true
+        buildConfig = true // TODO:Gradle8.0にすると、buildConfigの生成がDefaultでfalseになるらしい（以前まではTrue）
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // Fragment
+    implementation "androidx.fragment:fragment-ktx:1.6.1"
+
+    // RecyclerView https://developer.android.com/jetpack/androidx/releases/recyclerview?hl=ja#groovy
+    implementation "androidx.recyclerview:recyclerview:1.3.1"
+
+    // Navigation : https://developer.android.com/guide/navigation/navigation-getting-started?hl=ja
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // Room: https://developer.android.com/jetpack/androidx/releases/room?hl=ja
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version" // RoomのKotlin拡張とコルーチンのサポート
+    kapt "androidx.room:room-compiler:$room_version"
+//    ksp "androidx.room:room-compiler:$room_version"
+
+    //Hilt: https://developer.android.com/training/dependency-injection/hilt-android?hl=ja
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+//    ksp "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    // Retrofit2 : https://github.com/square/retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit2_version"
+    // Retrofitでログ出力：https://github.com/square/okhttp/blob/master/okhttp-logging-interceptor/README.md
+    implementation "com.squareup.okhttp3:logging-interceptor:$logging_version"
+
+    // Moshi : https://github.com/square/moshi
+    implementation "com.squareup.moshi:moshi:1.14.0"
+    implementation "com.squareup.moshi:moshi-kotlin:1.14.0"
+
+    //Timber(LOG): https://github.com/JakeWharton/timber
+    implementation "com.jakewharton.timber:timber:$timber_version"
+
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_livedata_version"
+}
+
+// 生成されたコードへの参照を許可する
+kapt {
+    correctErrorTypes = true
+}
