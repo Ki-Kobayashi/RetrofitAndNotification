@@ -14,7 +14,9 @@ buildscript {
         google()
     }
     dependencies {
+        // 1/2 : API_KEY, BASE_URLを定義するのに、セキュリティ的に必要
         classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
+        // Fragment間のデータ受け渡しに必要
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
     }
 }

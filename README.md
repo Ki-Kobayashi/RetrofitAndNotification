@@ -2,6 +2,33 @@
 
 
 # Retrofit
+※細かい点は、実コードを参照   
+
+　　【事前準備】
+        ・Manifest （通信系の権限を3つ追加）
+        ・build.gradle（【 proj / app 】.secrets-gradle-plugin）
+        ・local.properties （API-Key, BASE_URL記載）
+
+　　【実装クラス】
+        ・Module （Retrofit / Moshi のインスタンスを生成）
+        ・Model　（API通信結果を詰める箱）
+                ※Modelクラスを楽に生成するために・・・・
+                        ・ASの　**Pluginから、「JsonToKotlinClass」**　を入れる
+                        ・ｍodelを生成したいPackageの上の 右クリック → 「JsonToKotlinClass」選択
+                        ・通信結果となる、Jsonを貼り付ける。
+                                ※細かい設定もできる
+                                **※ただし、たまに変なモデル構造で生成してくるので、チェックは必須**
+        ・Service（RetrofitのInterfece）
+        ・Repository（Serviceを呼び、withContext（Dispatchers.IO）でtry処理の実行）
+        ・ViewModel（Viewにセットするモデルは、クラス変数として、**StateFlow型**で定義する）
+
+        **※API通信結果のErrorハンドリングは、後に追記予定**
+
+
+# API33ターゲットでのNotificationの使い方（途中）
+　※NotificationDemoFragmentを参照
+　※README.md　も参照するので、開きっぱなしにしておく
+
 
 # 権限リクエストの流れ
 
@@ -100,9 +127,17 @@ private val requestPermissionLauncher =
           }
       }
   }
-}
 
 ```
 
-# API33ターゲットでのNotificationの使い方（途中）
+
+
+
+**１. module/RetrofitModule.kt, MoshiModule.kt を作成
+** 2.
+** 3.
+** 4.
+** 5.
+** 6.
+** 7.
 

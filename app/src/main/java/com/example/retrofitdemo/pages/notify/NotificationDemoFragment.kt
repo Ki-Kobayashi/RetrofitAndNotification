@@ -27,6 +27,45 @@ import timber.log.Timber
 // TODO: 将来的に起動させる予定のIntentは、PendingIntentを使用する
 
 /**
+ * ## Notificationの大まかな流れ
+ *
+ *  【API33以上Targetの場合】
+ * 　    1. ManifestFile；
+ *              「android.permission.POST_NOTIFICATIONS"」追加
+ *       2. 通知を ON にする "設定画面" などで、通知許可されているか、"権限チェック"
+ *              ★やり方：「README.md」  or  「コード内 > checkNotificationPermission()」を参照　
+ *
+ *
+ *   【定数クラス】
+ *       3.  以下 を定義：
+ *          ・　channeName
+ *          ・　channelID 「パッケージ名.notification.channel」、
+ *              （channelID：命名規則として、Package名を含めるのが通例）
+ *
+ *  【Fragment】
+ *      4.  norificationManagetの箱を定義（初期値:null）
+ *
+ *      5. onCreate：NotificationChannelを生成する
+ *              1. norification生成＋「手順4」に代入
+ *              2. 重要度を指定し、NotificationChannel 作成
+ *                       val importance = NotificationManager.IMPORTANCE_HIG
+ *                       val channel = NotificationChannel(id, name, importance).apply {
+ *                          this.description = channelDescription
+ *                       }
+ *              3. 「２」で生成したchannelを、notificationManager の createNotificationChannel にセット
+ *
+ *     6. （※必要なら）通知発行タイミングで、次回起動時に設定でOFFなら、アプリ設定（自作の）をONにするようダイアログ表示
+ *     7. 通知表示処理を生成
+ *          ※通知でできることは、以下の４種類
+ *                  ★ テキストのみの表示（表示だけでAction無）
+ *                  ★ テキスト表示＋通知自体タップで該当Fragment（Activity）に遷移（アプリが起動し表示される）
+ *                  ★ アクションボタン設置 （ボタンによってActionの設定が可能）
+ *                  ★ 通知から返信（例；LINEメッセージへの返信など）
+ *                  
+ *                  ※後は、実コード参照
+ */
+
+/**
  * Created by K.Kobayashi on 2023/08/02.
  */
 class NotificationDemoFragment : Fragment(R.layout.fragment_notification_demo) {

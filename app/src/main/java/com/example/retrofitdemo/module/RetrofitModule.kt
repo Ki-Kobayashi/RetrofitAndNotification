@@ -19,6 +19,16 @@ import javax.inject.Singleton
 
 /**
  * Created by K.Kobayashi on 2023/07/13.
+ *
+ * 複数のBaseUrlが異なるAPIと通信する場合、
+ *      １：（必要なら）通信の設定をするために、OkHttpClientを返すProviderを作成
+ *          ※タイムアウトなどの設定
+ *      ２：クラス下部のように、独自アノテーションを追加（BaseUrl ごとに生成する Retrofit インスタンスを区別するため）
+ *      ３：独自アノテーションを使い、BaseUrlごとにRetrofitを返すproviderを作成
+ *      ４：BaseUrlごとに、Service（Retrofit　Interface）を返す、Providerを作成
+ *
+ *      ※MoshiModuleも作成しておくこと
+ *      ※上2つのModule生成が完了したら、通信結果を受け取るモデル作成に進む
  */
 @Module
 @InstallIn(SingletonComponent::class)

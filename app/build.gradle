@@ -4,6 +4,7 @@ plugins {
     id "kotlin-parcelize"
     id "androidx.navigation.safeargs.kotlin"
     id "com.google.dagger.hilt.android"
+    // 2/2 : API_KEY, BASE_URLを定義するのに、セキュリティ的に必要
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
     id 'kotlin-kapt'
 //    id 'com.google.devtools.ksp'
