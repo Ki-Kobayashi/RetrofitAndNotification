@@ -1,15 +1,20 @@
-# RetrofitAndNotification
+## API33ターゲットでのNotificationの使い方（途中）
+　　※NotificationDemoFragmentを参照
+
+　　※README.md　も参照するので、開きっぱなしにしておく
 
 
-# Retrofit
-※細かい点は、実コードを参照   
+## Retrofit
+　　※細かい点は、実コードを参照   
 
 　　【事前準備】
+      
         ・Manifest （通信系の権限を3つ追加）
         ・build.gradle（【 proj / app 】.secrets-gradle-plugin）
         ・local.properties （API-Key, BASE_URL記載）
 
 　　【実装クラス】
+  
         ・Module （Retrofit / Moshi のインスタンスを生成）
         ・Model　（API通信結果を詰める箱）
                 ※Modelクラスを楽に生成するために・・・・
@@ -17,54 +22,52 @@
                         ・ｍodelを生成したいPackageの上の 右クリック → 「JsonToKotlinClass」選択
                         ・通信結果となる、Jsonを貼り付ける。
                                 ※細かい設定もできる
-                                **※ただし、たまに変なモデル構造で生成してくるので、チェックは必須**
+                                **※ただし、たまに変なモデル構造で生成してくるので、チェックは必須**                    
         ・Service（RetrofitのInterfece）
         ・Repository（Serviceを呼び、withContext（Dispatchers.IO）でtry処理の実行）
         ・ViewModel（Viewにセットするモデルは、クラス変数として、**StateFlow型**で定義する）
+        
+　　■ ※ 注意 ※■
+  
+　　　**※API通信結果のErrorハンドリングは、後に追記予定**
 
-        **※API通信結果のErrorハンドリングは、後に追記予定**
+.
+.
+## 権限リクエストの流れ
 
-
-# API33ターゲットでのNotificationの使い方（途中）
-　※NotificationDemoFragmentを参照
-　※README.md　も参照するので、開きっぱなしにしておく
-
-
-# 権限リクエストの流れ
-
-**１. すでに**権限許可**しているか（PackageManager.PERMISSION_GRANTED） or 権限許可** 未 **チェックか**
+　**１. すでに**権限許可**しているか（PackageManager.PERMISSION_GRANTED） or 権限許可** 未 **チェックか**
 
 　　（ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.XXX_XXX)）
 
-**２. 以前拒否していたために、許可させるための説明が必要か**
+　**２. 以前拒否していたために、許可させるための説明が必要か**
 
     **※｛今後（永久に）表示しない」を選択 or 以前許可した場合は、「false」が返る**
 　　（shouldShowRequestPermissionRationale(Manifest.permission.XXX_XXX)
 
-**３. if (「１」がPackageManager.PERMISSION_GRANTED)　なら、すでに許可済**
+　**３. if (「１」がPackageManager.PERMISSION_GRANTED)　なら、すでに許可済**
 
 　　　→ ★ 許可が必要だった処理の実行（通知・カメラ起動など）
 
-**４. else （「３」が許可されてない）なら、「２」の可否で分岐**
+　**４. else （「３」が許可されてない）なら、「２」の可否で分岐**
 
       ・説明が必要：なぜ許可する必要があるか**説明するダイアログ表示**
       ・説明が **不要 ：権限リクエスト**
 
-**５. 権限リクエストをした結果で処理の分岐**
+　**５. 権限リクエストをした結果で処理の分岐**
 
-   5-1. 許可された： ★ 許可が必要だった処理の実行（通知・カメラ起動など）
+ 　　　  5-1. 許可された： ★ 許可が必要だった処理の実行（通知・カメラ起動など）
 
-   5-2. 拒否： 以前拒否したか（ゆえに説明が必要か）チェック（shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)）
+ 　　　  5-2. 拒否： 以前拒否したか（ゆえに説明が必要か）チェック（shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)）
   
-  ｛今後（永久に）表示しない」を選択 or 以前許可した場合は、「false」が返る
+  　　　｛今後（永久に）表示しない」を選択 or 以前許可した場合は、「false」が返る
         
-  5-2-1 ：　以前拒否：ダイアログ or SnackBarで、「通知を受け取るには許可が必要です」など表示 
+　　　　　　  5-2-1 ：　以前拒否：ダイアログ or SnackBarで、「通知を受け取るには許可が必要です」など表示 
      
-  5-2-2. **｛今後（永久に）表示しない」を選択** ：
+ 　　　　　　 5-2-2. **｛今後（永久に）表示しない」を選択** ：
   
-           1.「"設定"で許可してください」のような説明を表示
-           2. デバイス設定から、アプリ設定に飛ばす
-
+        　　　   1.「"設定"で許可してください」のような説明を表示
+       　　　    2. デバイス設定から、アプリ設定に飛ばす
+　　
 ### Fragment の場合の例
 ```kotlin
 
@@ -134,10 +137,16 @@ private val requestPermissionLauncher =
 
 
 **１. module/RetrofitModule.kt, MoshiModule.kt を作成
+
 ** 2.
+
 ** 3.
+
 ** 4.
+
 ** 5.
+
 ** 6.
+
 ** 7.
 
